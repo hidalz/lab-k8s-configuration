@@ -1,3 +1,4 @@
+# Poll every 3 minutes. If want to get rid of the delay, use webhooks
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,8 +8,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://gitlab.com/nanuchi/argocd-app-config.git
-    targetRevision: HEAD
+    repoURL: https://github.com/hidalz/lab-k8s-configuration
     path: dev
   destination:
     server: https://kubernetes.default.svc
@@ -18,6 +18,6 @@ spec:
     syncOptions:
       - CreateNamespace=true
 
-    automated:
-      selfHeal: true
-      prune: true
+    automated: # Automatically sync the application
+      selfHeal: true # Override any manual changes to the cluster
+      prune: true # Automatic sync will delete resources
